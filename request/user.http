@@ -1,0 +1,39 @@
+@api = http://localhost:4000/usuarios
+
+GET  {{api}}
+###
+GET {{api}}/4
+
+###
+POST {{api}}
+Content-Type: application/json
+
+{
+        "username": "usuario99",
+        "password": "contraseña99",
+        "works": 58,
+        "mail":"ejemplo99@gmail.com",
+        "followers": 99,
+        "follows": 99,
+        "premium": 1,
+        "occupation":"ocupacion99",
+        "profilePicture": "url de foto de perfil 99",  
+        "description": "descripcion99"
+}
+###
+
+DELETE {{api}}/3
+
+###
+PUT {{api}}/2
+Content-Type:application/json
+
+{
+        "username": "UsuarioPerdiLaCuenta",
+        "password": "4554788721",
+        "works": 0,
+        "followers": 0,
+        "follows": 0,
+        "premium": 0,
+        "description": "Si sale bien termine la api de prueba"
+}

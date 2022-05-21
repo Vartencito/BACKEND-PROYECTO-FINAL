@@ -1,0 +1,33 @@
+@api = http://localhost:4000/publicaciones
+
+### trer todas las publicaciones
+GET  {{api}}
+
+### Traer una publicacion por su id
+GET {{api}}/1
+
+### Traer una publicacion por su fkUser
+GET {{api}}/getPublicationsByUserId/4
+
+
+### crear publicacion
+POST {{api}}
+Content-Type: application/json
+
+{
+        "image":"prueba para borrar",
+        "name": "nombre para tirar",
+        "description":"no sirve",
+        "likes": 5,
+        "dislikes": 7,
+        "fkUser": 5
+}
+### borrar una publicacion por su id
+
+DELETE {{api}}/5
+
+### borrar una publiacion por el fkUser
+
+DELETE {{api}}/getPublicationsByUserId/4
+
+### actualizar una publicacion (no se si tiene sentido)
