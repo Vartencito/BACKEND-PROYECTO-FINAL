@@ -15,12 +15,12 @@ POST {{api}}
 Content-Type: application/json
 
 {
-        "image":"prueba para borrar",
-        "name": "nombre para tirar",
-        "description":"no sirve",
-        "likes": 5,
+        "image":"https://i.imgur.com/Dmu3nUD_d.webp?maxwidth=520&shape=thumb&fidelity=high",
+        "name": "perro2",
+        "description":"foto de un perro2",
+        "likes": 4,
         "dislikes": 7,
-        "fkUser": 5
+        "fkUser": 10
 }
 ### borrar una publicacion por su id
 

@@ -2,38 +2,42 @@
 
 GET  {{api}}
 ###
-GET {{api}}/4
+GET {{api}}/5
 
 ###
 POST {{api}}
 Content-Type: application/json
 
 {
-        "username": "usuario99",
-        "password": "contraseña99",
-        "works": 58,
-        "mail":"ejemplo99@gmail.com",
-        "followers": 99,
-        "follows": 99,
-        "premium": 1,
-        "occupation":"ocupacion99",
-        "profilePicture": "url de foto de perfil 99",  
-        "description": "descripcion99"
+        "username": "usuario11",
+        "password": "contraseña11",
+        "works": 11,
+        "mail":"ejemplo11@gmail.com",
+        "followers": 11,
+        "follows": 11,
+        "premium": 0,
+        "occupation": "ocupacion11",
+        "profilePicture": "pfp11",  
+        "description": "descripcion11"
 }
 ###
 
-DELETE {{api}}/3
+DELETE {{api}}/4
 
 ###
-PUT {{api}}/2
+PUT {{api}}/6
 Content-Type:application/json
 
 {
-        "username": "UsuarioPerdiLaCuenta",
-        "password": "4554788721",
+        "username": "usuarioactualizado",
+        "password": "yfkufjuyrdjfd",
         "works": 0,
+        "mail":"turiufkv@gmail.com",
         "followers": 0,
         "follows": 0,
         "premium": 0,
-        "description": "Si sale bien termine la api de prueba"
+        "occupation": "khgkutfyhr",
+        "profilePicture": "tyeruytjgkvjh",  
+        "description": "mvvdssdfg"
 }
+
