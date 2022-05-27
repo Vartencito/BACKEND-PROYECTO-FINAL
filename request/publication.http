@@ -15,15 +15,14 @@ POST {{api}}
 Content-Type: application/json
 
 {
-        "image":"https://i.imgur.com/Dmu3nUD_d.webp?maxwidth=520&shape=thumb&fidelity=high",
-        "name": "perro2",
-        "description":"foto de un perro2",
-        "likes": 4,
-        "dislikes": 7,
-        "fkUser": 10
+        "image":"https://i.imgur.com/MwdPaFZ_d.webp?maxwidth=520&shape=thumb&fidelity=high",
+        "name": "nombre1",
+        "description":"meme",
+        "likes": 7,
+        "dislikes": 9,
+        "fkUser": 9
 }
 ### borrar una publicacion por su id
-
 DELETE {{api}}/5
 
 ### borrar una publiacion por el fkUser

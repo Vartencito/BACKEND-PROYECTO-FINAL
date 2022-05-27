@@ -2,6 +2,10 @@ import { getConnection, sql, queries } from '../database';
 
 //traer todas las publicaciones
 
+//METER LA FECHA EN LA QUE SE CREA LA PUBLICACION
+//HACER UN CAMPO DATE QUE EL USER NO LO TOQUE
+//PONER POR DEFECTO LA FECHA EN LA QUE SE CREA LA IMAGEN
+
 export const getPublications = async(req, res) => {
     try {
         const pool = await getConnection();
