@@ -22,7 +22,7 @@ Content-Type: application/json
         "dislikes": 9,
         "fkUser": 9
 }
-### borrar una publicacion por su id
+### borrar una publicacion por su id0
 DELETE {{api}}/5
 
 ### borrar una publiacion por el fkUser

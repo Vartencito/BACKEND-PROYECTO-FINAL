@@ -18,6 +18,7 @@ export const getUsers = async(req, res) => {
 //Crear un usuario
 export const createUser = async(req, res) => {
     const {
+        name,
         username,
         password,
         mail,
@@ -25,63 +26,60 @@ export const createUser = async(req, res) => {
     } = req.body
 
     let { 
+        lastName,
+        cellphone,  
         description,
         profilePicture,
-        occupation,
-        works,
-        followers,
-        follows
+        created_at,
+        occupation
     } = req.body;
 
+    let fecha = new Date;
+        fecha = fecha.getUTCFullYear() + '-' +
+        ('00' + (fecha.getUTCMonth()+1)).slice(-2) + '-' +
+        ('00' + fecha.getUTCDate()).slice(-2) + ' ' + 
+        ('00' + (fecha.getUTCHours()-3)).slice(-2) + ':' + 
+        ('00' + fecha.getUTCMinutes()).slice(-2) + ':' + 
+        ('00' + fecha.getUTCSeconds()).slice(-2);
+
+    created_at = fecha;
+    
+    if(lastName== null){
+        lastName = "";
+    }
+    if(cellphone == null){
+        cellphone = "";
+    }
+
     if (description == null) {
-        description = " ";
+        description = "";
     }  
     if (profilePicture == null){
-        profilePicture = " ";
+        profilePicture = "";
     }
     if (occupation == null){
-        occupation = " ";
+        occupation = "";
     }
-    if (works == null){
-        works = 0;
-    }
-    if (followers == null){
-        followers = 0;
-    }
-    if (follows == null){
-        follows = 0;     
-    }
-    else if (username == null || password == null || mail == null || premium == null) {
+    else if (name == null || username == null || password == null || mail == null || premium == null) {
         return res.status(400).json({ msg: 'faltan datos' });
     }
 
-    console.log(
-        username,
-        password,
-        works,
-        mail,
-        followers,
-        follows,
-        premium,
-        occupation,
-        profilePicture,
-        description
-    );
     try {
         const pool = await getConnection();
         await pool.request()
+            .input("name", sql.VarChar(50), name)
+            .input("lastName", sql.VarChar(50), lastName)
             .input("username", sql.VarChar(50), username)
             .input("password", sql.VarChar(50), password)
-            .input("works", sql.Int, works)
+            .input("cellphone", sql.VarChar(50), cellphone)
             .input("mail", sql.VarChar(50), mail)
-            .input("followers", sql.Int, followers)
-            .input("follows", sql.Int, follows)
+            .input("description", sql.Text, description)
+            .input("profilePicture", sql.VarChar(255), profilePicture)
+            .input("created_at", sql.DateTime, created_at)
             .input("premium", sql.Bit, premium)
             .input("occupation", sql.VarChar(50), occupation)
-            .input("profilePicture", sql.VarChar(255), profilePicture)
-            .input("description", sql.Text, description)
             .query(queries.createUser);
-        res.json({ username, password, works, mail, followers, follows, premium, occupation, profilePicture, description });
+        res.json({ name, lastName, username, password, cellphone, mail, description, profilePicture, created_at, premium, occupation});
     } catch (error) {
         res.status(500);
         res.send(error.msg('Error en el servidor'));
@@ -100,7 +98,6 @@ export const getUserById = async(req, res) => {
             .request()
             .input("Id", Id)
             .query(queries.getUserById);
-        console.log("sql");
         res.send(result.recordset[0]);
 
     } catch (error) {
@@ -138,23 +135,24 @@ export const deleteUser = async(req, res) => {
 export const updateUser = async(req, res) => {
 
     const {
+        name,
+        lastName,
         username,
         password,
-        works,
+        cellphone,
         mail,
-        followers,
-        follows,
-        premium,
-        occupation,
+        description,
         profilePicture,
-        description
+        created_at,
+        premium,
+        occupation
+
     } = req.body
 
     const { Id } = req.params;
 
-    if (username == null || password == null || works == null || mail == null ||
-        followers == null || follows == null || premium == null || occupation == null
-        || profilePicture == null || description == null) {
+    if (name == null || username == null || password == null || mail == null ||
+         premium == null) {
         return res.status(400).json({ msg: 'faltan datos' });
     }
 
@@ -162,19 +160,19 @@ export const updateUser = async(req, res) => {
         const pool = await getConnection();
         await pool.request()
             .input("Id", Id)
+            .input("name", sql.VarChar(50), name)
+            .input("lastName", sql.VarChar(50), lastName)
             .input("username", sql.VarChar(50), username)
             .input("password", sql.VarChar(50), password)
-            .input("works", sql.Int, works)
+            .input("cellphone", sql.VarChar(50), cellphone)
             .input("mail", sql.VarChar(50), mail)
-            .input("followers", sql.Int, followers)
-            .input("follows", sql.Int, follows)
+            .input("description", sql.Text, description)
+            .input("profilePicture", sql.VarChar(255), profilePicture)
+            .input("created_at", sql.DateTime, created_at)
             .input("premium", sql.Bit, premium)
             .input("occupation", sql.VarChar(50), occupation)
-            .input("profilePicture", sql.VarChar(255), profilePicture)
-            .input("description", sql.Text, description)
             .query(queries.updateUser);
-        res.json({ username, password, works, mail, followers, follows, 
-                    premium, occupation, profilePicture, description });
+        res.json({ name, lastName, username, password, cellphone, mail, description, profilePicture, created_at, premium, occupation});
     } catch (error) {
         res.status(500);
         res.send(error.msg('Error en el servidor'));

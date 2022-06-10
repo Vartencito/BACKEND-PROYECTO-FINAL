@@ -1,4 +1,4 @@
-import { getConnection, sql, queries } from '../database';
+ import { getConnection, sql, queries } from '../database';
 
 //traer todas las publicaciones
 
@@ -62,49 +62,26 @@ export const getPublicationsByUserId = async(req, res) => {
 
 export const createPublication = async(req, res) => {
     const {
-        image,
         name,
-        fkUser
+        image,
+        fkUser,
+        created_at
     } = req.body
 
-    let { 
-        description,
-        likes,
-        dislikes
-    } = req.body;
 
-    if (description == null) {
-        description = " ";
-    }  
-    if (likes == null){
-        likes = 0;
-    }
-    if (dislikes == null){
-        dislikes = 0;
-    }
-    else if (image == null || name == null || fkUser == null) {
+    if (image == null || name == null || fkUser == null || created_at == null) {
         return res.status(400).json({ msg: 'faltan datos' });
     }
 
-    console.log(
-        image,
-        name,
-        description,
-        likes,
-        dislikes,
-        fkUser
-    );
     try {
         const pool = await getConnection();
         await pool.request()
-            .input("image", sql.VarChar(255), image)
-            .input("name", sql.VarChar(50), name)
-            .input("description", sql.VarChar(50), description)
-            .input("likes", sql.Int, likes)
-            .input("dislikes", sql.Int, dislikes)
-            .input("fkUser", sql.Int, fkUser)
-            .query(queries.createPublication);
-        res.json({ image, name, description, likes, dislikes, fkUser });
+        .input("name", sql.VarChar(50), name)
+        .input("image", sql.VarChar(255), image)
+        .input("fkUser", sql.Int, fkUser)
+        .input("created_at", sql.DateTime, created_at)
+        .query(queries.createPublication);
+        res.json({ name, image, fkUser, created_at });
     } catch (error) {
         res.status(500);
         res.send(error.msg('Error en el servidor'));

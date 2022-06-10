@@ -9,16 +9,16 @@ POST {{api}}
 Content-Type: application/json
 
 {
-        "username": "usuario11",
-        "password": "contraseña11",
-        "works": 11,
-        "mail":"ejemplo11@gmail.com",
-        "followers": 11,
-        "follows": 11,
+        "name":"nombre1",
+        "lastName":"apellido1",
+        "username": "usuario1",
+        "password": "contraseña1",
+        "cellphone":"cellphone1",
+        "mail":"ejemplo1@gmail.com",
+        "description": "descripcion1",
+        "profilePicture": "pfp1",
         "premium": 0,
-        "occupation": "ocupacion11",
-        "profilePicture": "pfp11",  
-        "description": "descripcion11"
+        "occupation": "ocupacion1"
 }
 ###
 
