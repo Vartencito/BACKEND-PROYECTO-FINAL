@@ -2,7 +2,8 @@ import express from 'express'
 import config from './config'
 import userRoutes from './routes/userRoutes'
 import publicationRoutes from './routes/publicationRoutes'
-
+import commentRoutes from './routes/commentsRoutes'
+import likeOrDislikeRoutes from './routes/likeOrDislikeRoutes'
 
 const app = express();
 
@@ -22,5 +23,7 @@ app.use(function(req, res, next) {
 
 app.use(userRoutes);
 app.use(publicationRoutes);
+app.use(commentRoutes);
+app.use(likeOrDislikeRoutes);
 
 export default app

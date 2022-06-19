@@ -1,9 +1,9 @@
 import { getConnection, sql, queries } from '../database';
-import { queriesUser } from '../database/queries';
 
 //Traer todos los usuarios
 
 export const getUsers = async(req, res) => {
+
     try {
         const pool = await getConnection();
         const result = await pool.request().query(queries.getUsers);
@@ -13,6 +13,7 @@ export const getUsers = async(req, res) => {
         res.status(500);
         res.send(error.msg('Error en el servidor'));
     }
+
 };
 
 //Crear un usuario
@@ -30,15 +31,16 @@ export const createUser = async(req, res) => {
         cellphone,  
         description,
         profilePicture,
-        created_at,
         occupation
     } = req.body;
+
+    let created_at = null;
 
     let fecha = new Date;
         fecha = fecha.getUTCFullYear() + '-' +
         ('00' + (fecha.getUTCMonth()+1)).slice(-2) + '-' +
         ('00' + fecha.getUTCDate()).slice(-2) + ' ' + 
-        ('00' + (fecha.getUTCHours()-3)).slice(-2) + ':' + 
+        ('00' + (fecha.getUTCHours()-6)).slice(-2) + ':' + 
         ('00' + fecha.getUTCMinutes()).slice(-2) + ':' + 
         ('00' + fecha.getUTCSeconds()).slice(-2);
 
@@ -143,10 +145,8 @@ export const updateUser = async(req, res) => {
         mail,
         description,
         profilePicture,
-        created_at,
         premium,
         occupation
-
     } = req.body
 
     const { Id } = req.params;
@@ -168,11 +168,10 @@ export const updateUser = async(req, res) => {
             .input("mail", sql.VarChar(50), mail)
             .input("description", sql.Text, description)
             .input("profilePicture", sql.VarChar(255), profilePicture)
-            .input("created_at", sql.DateTime, created_at)
             .input("premium", sql.Bit, premium)
             .input("occupation", sql.VarChar(50), occupation)
             .query(queries.updateUser);
-        res.json({ name, lastName, username, password, cellphone, mail, description, profilePicture, created_at, premium, occupation});
+        res.json({ name, lastName, username, password, cellphone, mail, description, profilePicture, premium, occupation});
     } catch (error) {
         res.status(500);
         res.send(error.msg('Error en el servidor'));

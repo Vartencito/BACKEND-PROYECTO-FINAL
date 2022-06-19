@@ -7,10 +7,10 @@
 //PONER POR DEFECTO LA FECHA EN LA QUE SE CREA LA IMAGEN
 
 export const getPublications = async(req, res) => {
+
     try {
         const pool = await getConnection();
         const result = await pool.request().query(queries.getPublications);
-        console.log(result);
         res.json(result.recordset);
     } catch (error) {
         res.status(500);
@@ -31,7 +31,6 @@ export const getPublicationById = async(req, res) => {
             .input("Id", Id)
             .query(queries.getPublicationById);
         res.send(result.recordset[0]);
-
     } catch (error) {
         res.status(500);
         console.log(error)
@@ -50,8 +49,7 @@ export const getPublicationsByUserId = async(req, res) => {
             .request()
             .input("fkUser", sql.Int, fkUser)
             .query(queries.getPublicationsByUserId);
-        res.send(result.recordsets);
-
+        res.send(result.recordsets[0]);
     } catch (error) {
         res.status(500);
         console.log(error)
@@ -61,15 +59,26 @@ export const getPublicationsByUserId = async(req, res) => {
 //Crear una publicacion
 
 export const createPublication = async(req, res) => {
+    
     const {
         name,
         image,
         fkUser,
-        created_at
     } = req.body
 
+    let created_at = null;
 
-    if (image == null || name == null || fkUser == null || created_at == null) {
+    let fecha = new Date;
+    fecha = fecha.getUTCFullYear() + '-' +
+    ('00' + (fecha.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + fecha.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + (fecha.getUTCHours()-6)).slice(-2) + ':' + 
+    ('00' + fecha.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + fecha.getUTCSeconds()).slice(-2);
+
+    created_at = fecha;
+
+    if (image == null || name == null || fkUser == null) {
         return res.status(400).json({ msg: 'faltan datos' });
     }
 
@@ -78,8 +87,8 @@ export const createPublication = async(req, res) => {
         await pool.request()
         .input("name", sql.VarChar(50), name)
         .input("image", sql.VarChar(255), image)
-        .input("fkUser", sql.Int, fkUser)
         .input("created_at", sql.DateTime, created_at)
+        .input("fkUser", sql.Int, fkUser)                                       
         .query(queries.createPublication);
         res.json({ name, image, fkUser, created_at });
     } catch (error) {
