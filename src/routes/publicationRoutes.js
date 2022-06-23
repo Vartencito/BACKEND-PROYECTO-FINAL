@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { createPublication, deletePublication, deletePublicationsFromUser, getPublicationById, getPublications, getPublicationsByUserId } from "../controllers/publicationController";
+import { createPublication, 
+    deletePublication, 
+    deletePublicationsFromUser, 
+    getLikesFromPublication, 
+    getPublicationById, 
+    getPublications, 
+    getPublicationsByUserId,
+    getDislikesFromPublication } from "../controllers/publicationController";
 
 const router = Router();
 
@@ -7,7 +14,11 @@ router.get('/publicaciones', getPublications);
 
 router.get('/publicaciones/:Id', getPublicationById);
 
-router.get('/publicaciones/getPublicationsByUserId/:fkUser', getPublicationsByUserId)
+router.get('/publicaciones/getPublicationsByUserId/:fkUser', getPublicationsByUserId);
+
+router.get('/publicaciones/Likes/:fkPublication', getLikesFromPublication);
+
+router.get('/publicaciones/Disikes/:fkPublication', getDislikesFromPublication);
 
 router.post('/publicaciones', createPublication);
 

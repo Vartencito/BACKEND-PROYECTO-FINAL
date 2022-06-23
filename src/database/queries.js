@@ -12,8 +12,10 @@ export const queries = {
     getPublications: `SELECT * FROM Publication`,
     getPublicationById: `SELECT * FROM Publication WHERE Id = @Id`,
     getPublicationsByUserId: `SELECT * FROM Publication WHERE fkUser = @fkUser`,
-    createPublication: `INSERT INTO Publication (name, image, created_at, fkUser)
-                        VALUES (@name, @image, @created_at,@fkUser)`,
+    getLikesFromPublication: `SELECT COUNT (*) as Likes FROM LikeOrDislike WHERE fkPublication = @fkPublication AND stateLike = 'True' AND stateDislike = 'False'`,
+    getDislikesFromPublication: `SELECT COUNT (*) as Dislikes FROM LikeOrDislike WHERE fkPublication = @fkPublication AND stateDislike = 'true' AND stateLike = 'False'`,
+    createPublication: `INSERT INTO Publication (name, image, created_at, fkUser, description)
+    VALUES (@name, @image, @created_at, @fkUser, @description)`,
     updatePublication: `UPDATE Publication SET image = @image, name = @name, fkUser = @fkUser, created_at = @created_at`,
     deletePublication: `DELETE FROM Publication WHERE Id = @Id`,
     deletePublicationsFromUser: `DELETE FROM Publication WHERE fkUser = @fkUser`,

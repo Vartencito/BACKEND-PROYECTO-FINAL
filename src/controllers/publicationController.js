@@ -18,6 +18,45 @@ export const getPublications = async(req, res) => {
     }
 };
 
+//Obtener Likes de una publicacion
+
+export const getLikesFromPublication = async(req,res) =>{
+    
+    const { fkPublication } = req.params;
+
+    try {
+        const pool = await getConnection();
+        const result = await pool
+            .request()
+            .input("fkPublication", sql.Int, fkPublication)
+            .query(queries.getLikesFromPublication);
+        res.send(result.recordset[0]);
+    } catch (error) {
+        res.status(500);
+        console.log(error)
+    }
+
+}
+
+//Obtener dislikes de una publicacion
+
+export const getDislikesFromPublication = async(req,res) =>{
+    
+    const { fkPublication } = req.params;
+
+    try {
+        const pool = await getConnection();
+        const result = await pool
+            .request()
+            .input("fkPublication", sql.Int, fkPublication)
+            .query(queries.getDislikesFromPublication);
+        res.send(result.recordset[0]);
+    } catch (error) {
+        res.status(500);
+        console.log(error)
+    }
+
+}
 //Obtener una publicacion
 
 export const getPublicationById = async(req, res) => {
@@ -63,8 +102,10 @@ export const createPublication = async(req, res) => {
     const {
         name,
         image,
-        fkUser,
+        fkUser
     } = req.body
+
+    let {description} = req.body
 
     let created_at = null;
 
@@ -82,15 +123,20 @@ export const createPublication = async(req, res) => {
         return res.status(400).json({ msg: 'faltan datos' });
     }
 
+    if (description == null){
+        description = "";
+    }
+
     try {
         const pool = await getConnection();
         await pool.request()
         .input("name", sql.VarChar(50), name)
         .input("image", sql.VarChar(255), image)
         .input("created_at", sql.DateTime, created_at)
-        .input("fkUser", sql.Int, fkUser)                                       
+        .input("fkUser", sql.Int, fkUser)  
+        .input("description", sql.VarChar(255), description)                                     
         .query(queries.createPublication);
-        res.json({ name, image, fkUser, created_at });
+        res.json({ name, image, fkUser, created_at, description}).status(200);
     } catch (error) {
         res.status(500);
         res.send(error.msg('Error en el servidor'));
